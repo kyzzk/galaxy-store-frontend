@@ -9,12 +9,5 @@ import React, { useEffect, useCallback } from 'react';
 import Cafe from './screens/telaInicial'
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
-    "Mitr": require('./assets/fonts/Mitr.ttf')
-  })
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return ( <Cafe/> );
 }
