@@ -1,0 +1,21 @@
+.homeContainer {
+    height: 100vh;
+    width: 100vw;
+    background-color: #0C141F;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+  }
+  
+  .content h1 {
+    padding-top: 10%;
+    color: white;
+    font-size: 3em;
+    position: relative;
+  }

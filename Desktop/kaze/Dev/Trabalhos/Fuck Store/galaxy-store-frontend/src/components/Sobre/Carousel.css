@@ -1,0 +1,18 @@
+.control-prev.control-arrow:before {
+    margin-right: 0;
+  }
+  
+  .control-next.control-arrow:before {
+    margin-left: 0;
+  }
+  
+  .carousel .slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .thumbs-wrapper {
+    display: none;
+  }
+  
