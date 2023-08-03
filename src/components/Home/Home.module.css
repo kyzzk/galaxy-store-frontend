@@ -1,0 +1,109 @@
+.homeContainer {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.textContainer {
+    position: absolute;
+    top: 10%; 
+    right: 5%; 
+    color: #fff;
+    text-align: left; 
+}
+.textContainer2 {
+  position: absolute;
+  top: 8%; 
+  left: 10%; 
+  color: #fff;
+  text-align: left; 
+}
+.discordButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  min-width: 200px;
+  border: 0px;
+  border-radius: 10px;
+  -webkit-transition: background-color 100ms linear;
+  -ms-transition: background-color 100ms linear;
+  transition: background-color 100ms linear;
+  background: #7289da;
+  color: #ffffff;
+}
+
+.discordIcon {
+  margin-right: 8px;
+}
+.textContainer img {
+    padding-top: 4%;
+    width: 250px;  /* Ajuste para o tamanho desejado */
+    cursor: pointer;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+.textDiscount {
+    background: linear-gradient(91.31deg, #49AF97 2.74%, #6CA3E2 71.87%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.specialText {
+  background: linear-gradient(91.31deg, #FF31C0 2.74%, #e76cff 71.87%);  -webkit-background-clip: text;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.textContainer h1 {
+    font-size: 40px; 
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .textContainer {
+      top: 9%;
+      right: 5%;
+      left: 5%;
+    }
+  
+    .textContainer p {
+      font-size: 14px;
+    }
+  
+    .textContainer h1 {
+      font-size: 24px;
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .textContainer {
+      top: 6%;
+    }
+  }
+@media (max-width: 768px) {
+    .navbar .logo {
+        display: none;
+    }
+
+    .navbar .nav-links {
+        display: block;
+        text-align: center;
+    }
+
+    .navbar .nav-links a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .navbar .menu {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+    }
+}

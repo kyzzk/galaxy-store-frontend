@@ -1,0 +1,178 @@
+.homeContainer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #0c141f;
+  color: #ffffff;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.paymentRedirectContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 25vh;
+  background-color: #0c141f;
+  color: #ffffff;
+}
+
+.paymentRedirectContainer h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  margin-top: 20px;
+}
+
+.leftContainer {
+  flex: 1;
+  width: 100%;
+  max-width: 500px;
+}
+
+.rightContainer {
+  flex: 1;
+  width: 100%;
+  max-width: 300px;
+}
+
+.orderInfo {
+  margin-bottom: 40px;
+}
+
+.orderInfo h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.itemsSection {
+  margin-bottom: 20px;
+}
+
+.itemsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.itemsHeader h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.itemsHeader:hover {
+  color: #9adaf8;
+}
+
+.itemsDetails {
+  margin-top: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.statusContainer {
+  margin-top: 20px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+.statusContainer h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.notification {
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+.statusPending {
+  display: flex;
+  align-items: center;
+  color: #ffc107;
+}
+
+.statusApproved {
+  display: flex;
+  align-items: center;
+  color: #28a745;
+}
+
+.statusCanceled {
+  display: flex;
+  align-items: center;
+  color: #dc3545;
+}
+
+.statusExpired {
+  display: flex;
+  align-items: center;
+  color: #8a8787;
+}
+
+.qrCodeContainer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.qrCodeWrapper {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.qrCodeContainer img {
+  width: 200px;
+  height: 200px;
+}
+
+.pixButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: #47c8f0;
+  margin-top: 10px;
+}
+
+.pixButton:hover {
+  color: #11b0e0;
+}
+
+.pixButton span {
+  margin-left: 5px;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
