@@ -25,16 +25,6 @@ interface Smurf {
     updated: string,
 }
 
-interface Cracked {
-    id: number;
-    nome_de_usuario: string;
-    senha: string;
-    pedido_vinculado_id: number;
-    conta_disponivel: boolean;
-    created: string;
-    updated: string;
-}
-
 
 interface Pedido {
     id: number;
@@ -409,50 +399,6 @@ function Profile() {
                         </tbody>
                     </div>
                 )}
-                {selectedAccountOption === "inativas_1ano" && (
-                    <div>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuário</th>
-                                <th>Senha</th>
-                                <th>Data de Compra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {contas1ano.map((conta) => (
-                                <tr key={conta.id}>
-                                    <td>{conta.id}</td>
-                                    <td>{conta.nome_de_usuario}</td>
-                                    <td>{conta.senha}</td>
-                                    <td>{conta.updated}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </div>
-                )}
-                {selectedAccountOption === "inativas_2anos" && (
-                    <div>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuário</th>
-                                <th>Senha</th>
-                                <th>Data de Compra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {contas2anos.map((conta) => (
-                                <tr key={conta.id}>
-                                    <td>{conta.id}</td>
-                                    <td>{conta.nome_de_usuario}</td>
-                                    <td>{conta.senha}</td>
-                                    <td>{conta.updated}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </div>
-                )}
             </table>
         );
     };
@@ -608,9 +554,6 @@ function Profile() {
                                     >
                                         <option value="">Selecione uma opção</option>
                                         <option value="unranked">Contas SMURF</option>
-                                        <option value="ativas">Cracked - Ativas</option>
-                                        <option value="inativas_1ano">Cracked - Inativas 1 ano</option>
-                                        <option value="inativas_2anos">Cracked - Inativas 2 anos</option>
                                     </select>
                                 </div>
                                 <div className={styles.accountList}>
