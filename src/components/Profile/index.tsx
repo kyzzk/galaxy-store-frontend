@@ -67,9 +67,6 @@ function Profile() {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [pedidosCupom, setPedidosCupom] = useState<Pedido[]>([]);
     const [contasSmurf, setContasSmurf] = useState<Smurf[]>([]);
-    const [contasAtivas, setContasAtivas] = useState<Cracked[]>([]);
-    const [contas1ano, setContas1ano] = useState<Cracked[]>([]);
-    const [contas2anos, setContas2anos] = useState<Cracked[]>([]);
 
     const [formato, setFormato] = useState('');
     const [base64, setBase64] = useState('');
@@ -144,19 +141,7 @@ function Profile() {
     const getTotalPedidos = () => {
         return pedidos.length;
     };
-    const mapContasAtivas = (ativasData: any[]): Cracked[] => {
-        return ativasData.map((ativaData) => {
-            return {
-                id: ativaData.id,
-                nome_de_usuario: ativaData.nome_de_usuario,
-                senha: ativaData.senha.replace("\\r", ""),
-                pedido_vinculado_id: ativaData.pedido_vinculado_id,
-                conta_disponivel: ativaData.conta_disponivel,
-                created: formatDate(ativaData.created),
-                updated: formatDate(ativaData.updated),
-            };
-        });
-    };
+    
     const mapContasSmurf = (ativasData: any[]): Smurf[] => {
         return ativasData.map((ativaData) => {
             return {
@@ -218,18 +203,6 @@ function Profile() {
                             if (response.data.pedidos && response.data.pedidos.length > 0) {
                                 const mappedPedidos = mapPedidos(response.data.pedidos);
                                 setPedidos(mappedPedidos.reverse());
-                            }
-                            if (response.data.ativas && response.data.ativas.length > 0) {
-                                const mappedContasAtivas = mapContasAtivas(response.data.ativas);
-                                setContasAtivas(mappedContasAtivas.reverse());
-                            }
-                            if (response.data.inativas_1ano && response.data.inativas_1ano.length > 0) {
-                                const mappedContasAtivas = mapContasAtivas(response.data.inativas_1ano);
-                                setContas1ano(mappedContasAtivas.reverse());
-                            }
-                            if (response.data.inativas_2anos && response.data.inativas_2anos.length > 0) {
-                                const mappedContasAtivas = mapContasAtivas(response.data.inativas_2anos);
-                                setContas2anos(mappedContasAtivas.reverse());
                             }
                             if (response.data.contas_smurf && response.data.contas_smurf.length > 0) {
                                 const mappedContasAtivas = mapContasSmurf(response.data.contas_smurf);
@@ -377,28 +350,7 @@ function Profile() {
                     </div>
                 )}
 
-                {selectedAccountOption === "ativas" && (
-                    <div>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuário</th>
-                                <th>Senha</th>
-                                <th>Data de Compra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {contasAtivas.map((conta) => (
-                                <tr key={conta.id}>
-                                    <td>{conta.id}</td>
-                                    <td>{conta.nome_de_usuario}</td>
-                                    <td>{conta.senha}</td>
-                                    <td>{conta.updated}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </div>
-                )}
+    
             </table>
         );
     };
