@@ -27,7 +27,8 @@ const LandingPage = () => {
     if (code) {
       const checkAuthentication = async () => {
           try {
-            const response = await axios.post(`${API_URL}/api/discord`, { code });
+            let loja = "Galaxy";
+            const response = await axios.post(`${API_URL}/api/discord`, { code, loja });
             if (response.status === 200) {
               const { token } = response.data;
               document.cookie = `AUTHENTICATION=${token}`;
