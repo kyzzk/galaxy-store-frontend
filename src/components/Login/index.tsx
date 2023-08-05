@@ -115,7 +115,7 @@ function Login() {
           />
           {error && <p className={styles.error}>{error}</p>}
           <button className={styles.loginBoxButton} onClick={handleLogin}>Logar</button>
-          <a href="https://discord.com/oauth2/authorize?client_id=1128729319590608966&redirect_uri=https%3A%2F%2Fwww.galaxyaccounts.shop%2F&response_type=code&scope=identify%20email">
+          <a href="https://discord.com/oauth2/authorize?client_id=1128729319590608966&redirect_uri=https%3A%2F%2Fgalaxyaccounts.shop%2F&response_type=code&scope=identify%20email">
             <button className={styles.discordButton}>
               <FaDiscord className={styles.discordIcon} />
               Logar com o Discord
