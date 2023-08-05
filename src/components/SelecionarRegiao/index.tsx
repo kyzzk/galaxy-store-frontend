@@ -458,6 +458,7 @@ const SelecionarRegiao = () => {
                         pix: pagamentoResponse.data.qr_code,
                         qr_code: pagamentoResponse.data.qr_code_base64,
                         data_expiracao: formattedExpirationDate,
+                        loja: "Galaxy"
                       };
 
                       const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
