@@ -204,6 +204,7 @@ function PaymentRedirect() {
             </div>
           </div>
         </div>
+        <h4 style={{color: 'yellow', paddingTop: '10'}}>IMPORTANTE: Você receberá a sua conta no seu Perfil, em "Minhas Contas"</h4>
         {timerON && (
         <div style={{paddingTop: 10}}>
           <h4 style={{ marginBottom: "10px" }}>

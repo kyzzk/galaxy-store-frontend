@@ -78,6 +78,9 @@ const Navbar = () => {
         className={styles.menu}
       />
       <div className={`${styles['nav-links']} ${isOpen ? styles.open : ''}`}>
+        <a href="https://discord.gg/KyQanzGQke" target='_blank' rel="noreferrer">
+          Suporte
+        </a>
         <Link to="#" onClick={handleComprarClick}>
           Comprar
         </Link>

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { FaMoneyBill, FaUsers, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { AiOutlineLineChart } from 'react-icons/ai';
 import axios from 'axios';
+import Modal from 'react-modal';
 
 interface Smurf {
     id: number;
@@ -141,7 +142,7 @@ function Profile() {
     const getTotalPedidos = () => {
         return pedidos.length;
     };
-    
+
     const mapContasSmurf = (ativasData: any[]): Smurf[] => {
         return ativasData.map((ativaData) => {
             return {
@@ -311,47 +312,78 @@ function Profile() {
         }
     };
 
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [currentSkins, setCurrentSkins] = useState([]);
+
+    const handleOpenModal = (skins: any) => {
+        setCurrentSkins(skins);
+        setModalOpen(true);
+    };
+
     const renderAccountTable = () => {
         return (
-            <table className={styles.table}>
-
-                {selectedAccountOption === "unranked" && (
-                    <div>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuário</th>
-                                <th>Senha</th>
-                                <th>Skins</th>
-                                <th>Email</th>
-                                <th>Essência Azul</th>
-                                <th>Data de Criação</th>
-                                <th>Data de Aniversário</th>
-                                <th>Provedor de Internet</th>
-                                <th>Data de Compra</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {contasSmurf.map((conta) => (
-                                <tr key={conta.id}>
-                                    <td>{conta.id}</td>
-                                    <td>{conta.nome_de_usuario}</td>
-                                    <td>{conta.senha}</td>
-                                    <td>{conta.skins}</td>
-                                    <td>{conta.email}</td>
-                                    <td>{conta.essencia_azul}</td>
-                                    <td>{conta.data_criacao}</td>
-                                    <td>{conta.data_aniversario}</td>
-                                    <td>{conta.provedor_de_internet}</td>
-                                    <td>{conta.updated}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+            <div >
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={() => setModalOpen(false)}
+                    contentLabel="Skins Details"
+                    className={styles.modal}
+                >
+                    <h2>Skins na sua Conta</h2>
+                    <ul>
+                        {currentSkins}
+                    </ul>
+                    <div className={styles.buttonWrapper}>
+                        <button className={styles.modalCloseButtonColor} onClick={() => setModalOpen(false)}>
+                            Fechar
+                        </button>
                     </div>
-                )}
+                </Modal>
+                {!isModalOpen && (
+                    <table className={styles.table}>
 
-    
-            </table>
+                        {selectedAccountOption === "unranked" && (
+                            <div>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Usuário</th>
+                                        <th>Senha</th>
+                                        <th>Skins</th>
+                                        <th>Email</th>
+                                        <th>Essência Azul</th>
+                                        <th>Data de Criação</th>
+                                        <th>Data de Aniversário</th>
+                                        <th>Provedor de Internet</th>
+                                        <th>Data de Compra</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {contasSmurf.map((conta) => (
+                                        <tr key={conta.id}>
+                                            <td>{conta.id}</td>
+                                            <td>{conta.nome_de_usuario}</td>
+                                            <td>{conta.senha}</td>
+                                            <td>
+                                                <button className={styles.modalCloseButtonColor2} onClick={() => handleOpenModal(conta.skins)}>
+                                                    Ver Skins
+                                                </button>
+                                            </td>
+                                            <td>{conta.email}</td>
+                                            <td>{conta.essencia_azul}</td>
+                                            <td>{conta.data_criacao}</td>
+                                            <td>{conta.data_aniversario}</td>
+                                            <td>{conta.provedor_de_internet}</td>
+                                            <td>{conta.updated}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </div>
+                        )}
+                    </table>
+                )}
+            </div>
+
         );
     };
 
@@ -361,7 +393,9 @@ function Profile() {
         </div>;
     }
     return (
+
         <div className={styles.profileContainer}>
+
             <Navbar />
             <div className={styles.centeredContainer}>
                 <div className={styles.gridContainer}>
@@ -555,7 +589,9 @@ function Profile() {
                 </div>
             </div>
             <Footer />
+
         </div>
+
     );
 }
 
