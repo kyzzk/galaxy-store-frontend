@@ -148,6 +148,9 @@ const SelecionarRegiao = () => {
       const response = axios.get(`${API_URL}/api/produtos/listar`, {
         headers: {
           'Content-Type': 'application/json'
+        },
+        params: {
+          loja: "Galaxy"
         }
       })
 
@@ -238,6 +241,9 @@ const SelecionarRegiao = () => {
       const response = axios.get(`${API_URL}/api/produtos/listar`, {
         headers: {
           'Content-Type': 'application/json'
+        },
+        params: {
+          loja: "Galaxy"
         }
       })
 
@@ -308,7 +314,10 @@ const SelecionarRegiao = () => {
   }, [quantidadeContas, tempoInatividade]);
 
   useEffect(() => {
-    axios.get(`${API_URL}/api/produtos/listar`)
+    axios.get(`${API_URL}/api/produtos/listar`, {
+      params: {
+        loja: "Galaxy"
+      }})
       .then(data => setProdutos(data.data));
   }, []);
 
