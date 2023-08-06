@@ -417,6 +417,7 @@ const SelecionarRegiao = () => {
                             pix: pagamentoResponse.data.qr_code,
                             qr_code: pagamentoResponse.data.qr_code_base64,
                             data_expiracao: formattedExpirationDate,
+                            loja: "Galaxy"
                           };
 
                           const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
@@ -564,6 +565,7 @@ const SelecionarRegiao = () => {
                             pix: pagamentoResponse.data.qr_code,
                             qr_code: pagamentoResponse.data.qr_code_base64,
                             data_expiracao: formattedExpirationDate,
+                            loja: "Galaxy"
                           };
 
                           const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
@@ -613,6 +615,7 @@ const SelecionarRegiao = () => {
                         pix: pagamentoResponse.data.qr_code,
                         qr_code: pagamentoResponse.data.qr_code_base64,
                         data_expiracao: formattedExpirationDate,
+                        loja: "Galaxy"
                       };
 
                       const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
@@ -650,222 +653,6 @@ const SelecionarRegiao = () => {
       navigate('/login')
     }
   }
-  const handlePedidoCracked = async () => {
-    setBuying(true);
-    setTimeout(() => {
-      setBuying(false)
-    }, 5000);
-    const token = getAuthenticationToken();
-    if (token) {
-      try {
-        const response = await axios.post(`${API_URL}/api/validartoken`, { token });
-        if (response.status === 200) {
-          if (tempoInatividade === 'conta ativa') {
-            const response = await axios.get(`${API_URL}/api/estoque/ativa`);
-            if (response.status === 200) {
-              if (response.data.disponivel >= quantidadeContas) {
-                setError('');
-
-                const produtoSelecionado = produtos.find(
-                  (produto) => produto.nome.toLowerCase() === tempoInatividade.toLowerCase()
-                );
-
-                if (produtoSelecionado) {
-                  const parsedQuantidade = parseInt(quantidadeContas.toString());
-                  if (!isNaN(parsedQuantidade) && parsedQuantidade > 0) {
-
-                    let produto_id = produtoSelecionado.id;
-                    let quantidade = parsedQuantidade;
-                    const pagamentoResponse = await axios.post(`${API_URL}/api/pagamentos/criar`, { token, produto_id, quantidade })
-
-                    if (pagamentoResponse.status === 201) {
-                      const dateOfExpiration = new Date(pagamentoResponse.data.date_of_expiration);
-                      const formattedExpirationDate = dateOfExpiration.toISOString();
-
-                      const usuarioResponse = await axios.get(`${API_URL}/api/usuario`, {
-                        params: {
-                          token: token,
-                        },
-                      });
-
-                      if (usuarioResponse.status === 200) {
-                        const usuarioId = usuarioResponse.data.usuario.id;
-
-                        const pedidoData = {
-                          usuario: usuarioId,
-                          id_mp: pagamentoResponse.data.id,
-                          status: "P",
-                          produto: produtoSelecionado.id,
-                          quantidade: parsedQuantidade,
-                          pix: pagamentoResponse.data.qr_code,
-                          qr_code: pagamentoResponse.data.qr_code_base64,
-                          data_expiracao: formattedExpirationDate,
-                        };
-
-                        const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
-                        if (criarPedidoResponse.status === 201) {
-                          closeModal()
-                          console.log(criarPedidoResponse.data.pedido_id)
-                          navigate('/payments/' + criarPedidoResponse.data.pedido_id)
-                        } else {
-                          setError("Erro ao criar o pedido");
-                        }
-                      } else {
-                        setError("Erro ao obter o usuário");
-                      }
-                    } else {
-                      setError("Ocorreu um erro ao criar o pedido.")
-                    }
-                  } else {
-                    setError("Quantidade inválida");
-                  }
-                } else {
-                  setError("Produto selecionado não encontrado");
-                }
-              } else {
-                setError("Desculpe, quantidade no estoque insuficiente.");
-              }
-            }
-          } else if (tempoInatividade === "conta inativa 1 ano") {
-            const response = await axios.get(`${API_URL}/api/estoque/inativa1`);
-            if (response.status === 200) {
-              if (response.data.disponivel >= quantidadeContas) {
-                setError('');
-
-                const produtoSelecionado = produtos.find(
-                  (produto) => produto.nome.toLowerCase() === tempoInatividade.toLowerCase()
-                );
-
-                if (produtoSelecionado) {
-                  const parsedQuantidade = parseInt(quantidadeContas.toString());
-                  if (!isNaN(parsedQuantidade) && parsedQuantidade > 0) {
-                    const valor = parsedQuantidade * produtoSelecionado.preco;
-                    let produto_id = produtoSelecionado.id;
-                    let quantidade = parsedQuantidade;
-                    const pagamentoResponse = await axios.post(`${API_URL}/api/pagamentos/criar`, { token, produto_id, quantidade })
-
-                    if (pagamentoResponse.status === 201) {
-                      const dateOfExpiration = new Date(pagamentoResponse.data.date_of_expiration);
-                      const formattedExpirationDate = dateOfExpiration.toISOString();
-
-                      const usuarioResponse = await axios.get(`${API_URL}/api/usuario`, {
-                        params: {
-                          token: token,
-                        },
-                      });
-
-                      if (usuarioResponse.status === 200) {
-                        const usuarioId = usuarioResponse.data.usuario.id;
-
-                        const pedidoData = {
-                          usuario: usuarioId,
-                          id_mp: pagamentoResponse.data.id, // Preencher com o ID do MercadoPago
-                          status: "P",
-                          produto: produtoSelecionado.id,
-                          quantidade: parsedQuantidade,
-                          valor: valor,
-                          pix: pagamentoResponse.data.qr_code, // Preencher com a cópia e cola do PIX
-                          qr_code: pagamentoResponse.data.qr_code_base64, // Preencher com o QR Code em base64
-                          data_expiracao: formattedExpirationDate, // Preencher com a data de expiração em formato DateTime (Django)
-                        };
-
-                        const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
-                        if (criarPedidoResponse.status === 201) {
-                          closeModal()
-                          navigate('/payments/' + criarPedidoResponse.data.pedido_id)
-                        } else {
-                          setError("Erro ao criar o pedido");
-                        }
-                      } else {
-                        setError("Erro ao obter o usuário");
-                      }
-                    } else {
-                      setError("Ocorreu um erro ao criar o pedido.")
-                    }
-                  } else {
-                    setError("Quantidade inválida");
-                  }
-                } else {
-                  setError("Produto selecionado não encontrado");
-                }
-              } else {
-                setError("Desculpe, quantidade no estoque insuficiente.");
-              }
-            }
-          } else if (tempoInatividade === "conta inativa 2 anos") {
-            const response = await axios.get(`${API_URL}/api/estoque/inativa2`);
-            if (response.status === 200) {
-              if (response.data.disponivel >= quantidadeContas) {
-                setError('');
-
-                const produtoSelecionado = produtos.find(
-                  (produto) => produto.nome.toLowerCase() === tempoInatividade.toLowerCase()
-                );
-
-                if (produtoSelecionado) {
-                  const parsedQuantidade = parseInt(quantidadeContas.toString());
-                  if (!isNaN(parsedQuantidade) && parsedQuantidade > 0) {
-                    let produto_id = produtoSelecionado.id;
-                    let quantidade = parsedQuantidade;
-                    const pagamentoResponse = await axios.post(`${API_URL}/api/pagamentos/criar`, { token, produto_id, quantidade })
-
-                    if (pagamentoResponse.status === 201) {
-                      const dateOfExpiration = new Date(pagamentoResponse.data.date_of_expiration);
-                      const formattedExpirationDate = dateOfExpiration.toISOString();
-
-                      const usuarioResponse = await axios.get(`${API_URL}/api/usuario`, {
-                        params: {
-                          token: token,
-                        },
-                      });
-
-                      if (usuarioResponse.status === 200) {
-                        const usuarioId = usuarioResponse.data.usuario.id;
-
-                        const pedidoData = {
-                          usuario: usuarioId,
-                          id_mp: pagamentoResponse.data.id,
-                          status: "P",
-                          produto: produtoSelecionado.id,
-                          quantidade: parsedQuantidade,
-                          pix: pagamentoResponse.data.qr_code,
-                          qr_code: pagamentoResponse.data.qr_code_base64,
-                          data_expiracao: formattedExpirationDate,
-                        };
-
-                        const criarPedidoResponse = await axios.post(`${API_URL}/api/pedidos/criar`, pedidoData);
-                        if (criarPedidoResponse.status === 201) {
-                          closeModal()
-                          navigate('/payments/' + criarPedidoResponse.data.pedido_id)
-                        } else {
-                          setError("Erro ao criar o pedido");
-                        }
-                      } else {
-                        setError("Erro ao obter o usuário");
-                      }
-                    } else {
-                      setError("Ocorreu um erro ao criar o pedido.")
-                    }
-                  } else {
-                    setError("Quantidade inválida");
-                  }
-                } else {
-                  setError("Produto selecionado não encontrado");
-                }
-              } else {
-                setError("Desculpe, quantidade no estoque insuficiente.");
-              }
-            }
-          }
-        }
-      } catch (error) {
-        setError(String(error));
-      }
-    } else {
-      closeModal();
-      navigate("/login");
-    }
-  };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>ESCOLHA A REGIÃO</h1>
@@ -1190,53 +977,6 @@ const SelecionarRegiao = () => {
           </div>
         )}
 
-      </Modal>
-
-      <Modal
-        isOpen={modalOpen && selectedModal === 'CONTAS CRACKED'}
-        onRequestClose={closeModal}
-        contentLabel="Modal de Compra"
-        className={styles.modal}
-        overlayClassName={styles.modalOverlay}
-      >
-        <div className={styles.modalContent}>
-          <h2 className={styles.modalTitle}>Selecionar opções de compra</h2>
-          <div className={styles.modalInputs}>
-            <label>Quantidade de Contas:</label>
-            <input
-              type="text"
-              value={quantidadeContas === '' ? '' : quantidadeContas.toString()}
-              onChange={handleQuantidadeContasChange}
-              placeholder="Digite a quantidade"
-            />
-          </div>
-          <div className={styles.modalInputs}>
-            <label>Tempo de Inatividade:</label>
-            <select value={tempoInatividade} onChange={handleTempoInatividadeChange}>
-              <option value="">Selecione uma opção</option>
-              <option value="conta ativa">Ativa</option>
-              <option value="">------------------------------</option>
-              <option value="conta inativa 1 ano">Inativa - 1 ano</option>
-              <option value="">------------------------------</option>
-              <option value="conta inativa 2 anos">Inativa - 2 anos</option>
-            </select>
-          </div>
-          <div className={styles.modalInputs}>
-            <label>Valor Total:</label>
-            <p>{valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-          </div>
-          {error && tempoInatividade && <p className={styles.error}>{error}</p>}
-          <div className={styles.modalCloseButton}>
-            <button className={styles.modalCloseButtonColor} onClick={closeModal}>Fechar</button>
-            <button
-              disabled={valorTotal === 0 || valorTotal > 500}
-              className={styles.modalCloseButtonColor2}
-              onClick={handlePedidoCracked}
-            >
-              Fazer Pedido
-            </button>
-          </div>
-        </div>
       </Modal>
     </div>
   );
